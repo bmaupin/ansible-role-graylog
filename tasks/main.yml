@@ -1,0 +1,18 @@
+---
+- name: Install Java
+  yum:
+    name: java-1.8.0-openjdk-headless
+    state: latest
+  tags: [graylog]
+
+- name: Install and configure MongoDB
+  import_tasks: mongodb.yml
+  tags: [graylog]
+
+- name: Install and configure Elasticsearch
+  import_tasks: elasticsearch.yml
+  tags: [graylog]
+
+- name: Install and configure Graylog
+  import_tasks: graylog.yml
+  tags: [graylog]
