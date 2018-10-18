@@ -1,0 +1,24 @@
+---
+- name: Install MongoDB repository
+  yum_repository:
+    name: mongodb-org-4.2
+    description: MongoDB Repository
+    baseurl: https://repo.mongodb.org/yum/redhat/$releasever/mongodb-org/4.0/x86_64/
+    gpgcheck: yes
+    gpgkey: https://www.mongodb.org/static/pgp/server-4.0.asc
+    proxy: "{% if proxy_env is defined and proxy_env.https_proxy is defined %}\
+        {{ proxy_env.https_proxy }}\
+    {% else %}\
+        no\
+    {% endif %}"
+
+- name: Install MongoDB
+  yum:
+    name: mongodb-org
+    state: latest
+
+- name: Enable and start MongoDB
+  service:
+    name: mongod
+    state: started
+    enabled: yes

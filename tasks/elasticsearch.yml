@@ -1,0 +1,31 @@
+---
+- name: Install Elasticsearch repository
+  yum_repository:
+    name: elasticsearch-5.x
+    description: Elasticsearch repository for 5.x packages
+    baseurl: https://artifacts.elastic.co/packages/5.x/yum
+    gpgcheck: yes
+    gpgkey: https://artifacts.elastic.co/GPG-KEY-elasticsearch
+    proxy: "{% if proxy_env is defined and proxy_env.https_proxy is defined %}\
+        {{ proxy_env.https_proxy }}\
+    {% else %}\
+        no\
+    {% endif %}"
+
+- name: Install Elasticsearch
+  yum:
+    name: elasticsearch
+    state: latest
+
+- name: Configure Elasticsearch cluster name
+  lineinfile:
+    path: /etc/elasticsearch/elasticsearch.yml
+    regexp: '^#?cluster.name:.*'
+    line: "cluster.name: graylog"
+  notify: Restart Elasticsearch
+
+- name: Enable and start Elasticsearch
+  service:
+    name: elasticsearch
+    state: started
+    enabled: yes

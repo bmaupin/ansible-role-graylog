@@ -1,0 +1,10 @@
+---
+- name: Restart Elasticsearch
+  service:
+    name: elasticsearch
+    state: restarted
+
+- name: Restart Graylog
+  service:
+    name: graylog-server
+    state: restarted
