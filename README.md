@@ -20,9 +20,9 @@ Include the role and define any variables as described below
 ### Variables
 
 - `graylog_password_secret` (required)
-    - Graylog password_secret (see Graylog server.conf)
+    - Graylog password_secret (see /etc/graylog/server/server.conf)
 - `graylog_root_password_sha2` (required)
-    - Graylog root_password_sha2 (see Graylog server.conf)
+    - Graylog root_password_sha2 (see /etc/graylog/server/server.conf)
 - `proxy_env`
     - Proxy configuration (see https://docs.ansible.com/ansible/latest/user_guide/playbooks_environment.html)
 
