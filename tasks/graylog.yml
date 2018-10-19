@@ -38,6 +38,20 @@
     line: "root_password_sha2 = {{ graylog_root_password_sha2 }}"
   notify: Restart Graylog
 
+- name: Get local timezone
+  uri:
+    url: https://ipapi.co/timezone
+    return_content: yes
+  environment: "{{ proxy_env }}"
+  register: timezone
+
+- name: Set Graylog root_timezone
+  lineinfile:
+    path: /etc/graylog/server/server.conf
+    regexp: '^#?root_timezone =.*'
+    line: "root_timezone = {{ timezone.content }}"
+  notify: Restart Graylog
+
 - name: Set Graylog web_listen_uri
   lineinfile:
     path: /etc/graylog/server/server.conf
