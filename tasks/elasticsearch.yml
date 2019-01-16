@@ -9,7 +9,7 @@
     proxy: "{% if proxy_env is defined and proxy_env.https_proxy is defined %}\
         {{ proxy_env.https_proxy }}\
     {% else %}\
-        no\
+        _none_\
     {% endif %}"
 
 - name: Install Elasticsearch
