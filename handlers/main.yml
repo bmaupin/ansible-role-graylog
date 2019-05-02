@@ -8,3 +8,8 @@
   service:
     name: graylog-server
     state: restarted
+
+- name: Restart MongoDB
+  service:
+    name: mongod
+    state: restarted

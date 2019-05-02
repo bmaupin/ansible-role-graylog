@@ -16,6 +16,7 @@
   yum:
     name: elasticsearch-oss
     state: latest
+  notify: Restart Elasticsearch
 
 - name: Configure Elasticsearch cluster name
   lineinfile:
