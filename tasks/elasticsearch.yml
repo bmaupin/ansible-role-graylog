@@ -1,9 +1,9 @@
 ---
 - name: Install Elasticsearch repository
   yum_repository:
-    name: elasticsearch-5.x
-    description: Elasticsearch repository for 5.x packages
-    baseurl: https://artifacts.elastic.co/packages/5.x/yum
+    name: elasticsearch-6.x
+    description: Elasticsearch repository for 6.x packages
+    baseurl: https://artifacts.elastic.co/packages/oss-6.x/yum
     gpgcheck: yes
     gpgkey: https://artifacts.elastic.co/GPG-KEY-elasticsearch
     proxy: "{% if proxy_env is defined and proxy_env.https_proxy is defined %}\
@@ -14,7 +14,7 @@
 
 - name: Install Elasticsearch
   yum:
-    name: elasticsearch
+    name: elasticsearch-oss
     state: latest
 
 - name: Configure Elasticsearch cluster name
@@ -22,6 +22,13 @@
     path: /etc/elasticsearch/elasticsearch.yml
     regexp: '^#?cluster.name:.*'
     line: "cluster.name: graylog"
+  notify: Restart Elasticsearch
+
+- name: Disable Elasticsearch automatic index creation
+  lineinfile:
+    path: /etc/elasticsearch/elasticsearch.yml
+    regexp: '^#?action.auto_create_index:.*'
+    line: "action.auto_create_index: false"
   notify: Restart Elasticsearch
 
 - name: Enable and start Elasticsearch

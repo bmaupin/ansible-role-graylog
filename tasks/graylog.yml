@@ -3,7 +3,7 @@
   yum_repository:
     name: graylog
     description: Graylog repository
-    baseurl: https://packages.graylog2.org/repo/el/stable/2.4/$basearch/
+    baseurl: https://packages.graylog2.org/repo/el/stable/3.0/$basearch/
     gpgcheck: yes
     gpgkey: https://raw.githubusercontent.com/Graylog2/fpm-recipes/master/recipes/graylog-repository/files/rpm/RPM-GPG-KEY-graylog
     proxy: "{% if proxy_env is defined and proxy_env.https_proxy is defined %}\
@@ -17,18 +17,18 @@
     name: graylog-server
     state: latest
 
+- name: Set Graylog http_bind_address
+  lineinfile:
+    path: /etc/graylog/server/server.conf
+    regexp: '^#?http_bind_address =.*'
+    line: "http_bind_address = 0.0.0.0:9000"
+  notify: Restart Graylog
+
 - name: Set Graylog password_secret
   lineinfile:
     path: /etc/graylog/server/server.conf
     regexp: '^password_secret =.*'
     line: "password_secret = {{ graylog_password_secret }}"
-  notify: Restart Graylog
-
-- name: Set Graylog rest_listen_uri
-  lineinfile:
-    path: /etc/graylog/server/server.conf
-    regexp: '^#?rest_listen_uri =.*'
-    line: "rest_listen_uri = http://0.0.0.0:9000/api/"
   notify: Restart Graylog
 
 - name: Set Graylog root_password_sha2
@@ -50,13 +50,6 @@
     path: /etc/graylog/server/server.conf
     regexp: '^#?root_timezone =.*'
     line: "root_timezone = {{ timezone.content }}"
-  notify: Restart Graylog
-
-- name: Set Graylog web_listen_uri
-  lineinfile:
-    path: /etc/graylog/server/server.conf
-    regexp: '^#?web_listen_uri =.*'
-    line: "web_listen_uri = http://0.0.0.0:9000/"
   notify: Restart Graylog
 
 - name: Enable and start Graylog
