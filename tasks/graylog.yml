@@ -16,6 +16,7 @@
   yum:
     name: graylog-server
     state: latest
+  notify: Restart Graylog
 
 - name: Set Graylog http_bind_address
   lineinfile:

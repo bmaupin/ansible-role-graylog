@@ -16,6 +16,7 @@
   yum:
     name: mongodb-org
     state: latest
+  notify: Restart MongoDB
 
 - name: Enable and start MongoDB
   service:
