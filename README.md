@@ -3,13 +3,13 @@ Ansible role for Graylog
 ### Features
 
 - Installs and configures dependencies for Graylog (Java, MongoDB, Elasticsearch)
-- Installs Graylog
+- Installs Graylog 3.x
 - Configures Graylog web interface to run on 0.0.0.0
 
 
 ### Requirements
 
-- CentOS/RHEL
+- CentOS/RHEL 6+ ([http://docs.graylog.org/en/latest/pages/installation/operating_system_packages.html](http://docs.graylog.org/en/latest/pages/installation/operating_system_packages.html))
 
 
 ### Instructions
